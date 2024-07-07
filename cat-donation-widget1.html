@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barra de Donacions</title>
+    <style>
+        /* Aquí puedes poner tus estilos CSS */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f39c12; /* Fondo anaranjado */
+        }
+        .donation-bar-container {
+            background-color: #e67e22;
+            width: 300px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .donation-bar {
+            width: 100%;
+            height: 30px;
+            background-color: #99aab5;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+        .donation-fill {
+            height: 100%;
+            background-color: #43b581;
+            width: 0%;
+            transition: width 0.5s;
+        }
+        .donation-text {
+            margin-top: 10px;
+            color: white;
+            text-align: center;
+        }
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .controls input {
+            width: 60px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #99aab5;
+        }
+        .controls button {
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #43b581;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="donation-bar-container">
+        <div class="donation-bar">
+            <div class="donation-fill" id="donationFill"></div>
+        </div>
+        <div class="donation-text" id="donationText">0 / 2000</div>
+        <div class="controls">
+            <input type="number" id="donationInput" placeholder="Quantitat">
+            <button onclick="updateDonation()">Actualitzar</button>
+        </div>
+    </div>
+
+    <script>
+        let currentAmount = 0;
+        const goalAmount = 2000;
+
+        function updateDonation() {
+            const input = document.getElementById('donationInput');
+            const donationAmount = parseInt(input.value, 10);
+
+            if (isNaN(donationAmount)) return;
+
+            currentAmount = donationAmount;
+            const donationFill = document.getElementById('donationFill');
+            const donationText = document.getElementById('donationText');
+
+            const percentage = (currentAmount / goalAmount) * 100;
+            donationFill.style.width = percentage + '%';
+            donationText.textContent = `${currentAmount} / ${goalAmount}`;
+        }
+    </script>
+</body>
+</html>
