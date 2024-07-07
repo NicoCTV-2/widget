@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Barra de Donacions</title>
     <style>
-        /* Aquí puedes poner tus estilos CSS */
         body {
             font-family: Arial, sans-serif;
             display: flex;
@@ -13,6 +12,7 @@
             align-items: center;
             height: 100vh;
             background-color: #f39c12; /* Fondo anaranjado */
+            margin: 0;
         }
         .donation-bar-container {
             background-color: #e67e22;
@@ -40,25 +40,6 @@
             color: white;
             text-align: center;
         }
-        .controls {
-            margin-top: 20px;
-            display: flex;
-            justify-content: space-between;
-        }
-        .controls input {
-            width: 60px;
-            padding: 5px;
-            border-radius: 5px;
-            border: 1px solid #99aab5;
-        }
-        .controls button {
-            padding: 5px 10px;
-            border-radius: 5px;
-            border: none;
-            background-color: #43b581;
-            color: white;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
@@ -66,30 +47,28 @@
         <div class="donation-bar">
             <div class="donation-fill" id="donationFill"></div>
         </div>
-        <div class="donation-text" id="donationText">0 / 2000</div>
-        <div class="controls">
-            <input type="number" id="donationInput" placeholder="Quantitat">
-            <button onclick="updateDonation()">Actualitzar</button>
-        </div>
+        <div class="donation-text" id="donationText">0 / 1000</div>
     </div>
 
     <script>
         let currentAmount = 0;
-        const goalAmount = 2000;
+        const goalAmount = 1000;
 
-        function updateDonation() {
-            const input = document.getElementById('donationInput');
-            const donationAmount = parseInt(input.value, 10);
-
-            if (isNaN(donationAmount)) return;
-
-            currentAmount = donationAmount;
+        function updateDonation(amount) {
+            currentAmount = amount;
             const donationFill = document.getElementById('donationFill');
             const donationText = document.getElementById('donationText');
 
             const percentage = (currentAmount / goalAmount) * 100;
             donationFill.style.width = percentage + '%';
             donationText.textContent = `${currentAmount} / ${goalAmount}`;
+        }
+
+        // Actualiza la donación basándote en el parámetro de la URL
+        const params = new URLSearchParams(window.location.search);
+        const amount = parseInt(params.get('amount'), 10);
+        if (!isNaN(amount)) {
+            updateDonation(amount);
         }
     </script>
 </body>
